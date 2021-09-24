@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- favicon -->
+    <link rel="shortcut icon" href="/images/favicon.png" type="image/x-icon">
+    <!-- font-awesome kit link -->
+    <script src="https://kit.fontawesome.com/991a6b03a4.js" crossorigin="anonymous"></script>
+    <!-- stylesheet - tailwind css (cdn) -->
+    <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
+    <!-- custome stylesheets -->
+    <link rel="stylesheet" href="/stylesheets/style.css">
+
+    <title>Covid 19 Tracker</title>
+</head>
+<header class="text-gray-600 body-font">
+    <div class="container mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center">
+        <nav class="flex lg:w-2/5 flex-wrap items-center text-base md:ml-auto">
+            <a class="mr-5 hover:text-blue-500" href="https://disease.sh/v3/covid-19/all" target="_blank">Main API</a>
+        </nav>
+        <a
+            class="flex order-first lg:order-none lg:w-1/5 title-font font-medium items-center text-gray-900 lg:items-center lg:justify-center mb-4 md:mb-0">
+            <img src="/images/biohazard-solid.svg" onclick="window.location.reload();" fill="none" stroke="currentColor"
+                stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                class="w-10 h-10 text-white p-2 bg-white rounded-full" viewBox="0 0 24 24">
+            <span class="ml-3 text-xl hover:text-blue-500" onclick="window.location.reload();">Covid 19 Tracker</span>
+        </a>
+        <div class="lg:w-2/5 inline-flex lg:justify-end ml-5 lg:ml-0">
+            <button
+                class="inline-flex items-center bg-gray-100 border-0 py-1 px-3 focus:outline-none hover:bg-gray-200 rounded text-base mt-4 md:mt-0"><a
+                    href="https://github.com/yasirmonon" target="_blank"><i class="fab fa-github"
+                        style="color:#3b82f6"></i>
+                    My Github</a>
+                <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    class="w-4 h-4 ml-1" viewBox="0 0 24 24">
+                    <path d="M5 12h14M12 5l7 7-7 7"></path>
+                </svg>
+            </button>
+        </div>
+    </div>
+</header>
+
+<body>
+
+    <!-- welcome text -->
+    <div class="p-10 mb-5">
+        <div class="flex items-center w-auto mx-auto ">
+            <p class="rounded-l-full w-full py-2 px-2 text-gray-500 hover:text-blue-500 text-center leading-tight  focus:outline-none"
+                id="welcomeText" type="text" placeholder="Search By Country Name..." w-5>Welcome to Covid Tracker .
+                <br> Here
+                You can track the updated info of Covid - 19 affected countries and much more.
+                <br>
+                Please Note - The Datas
+                are collected through 3rd Party API
+            </p>
+        </div>
+    </div>
+    <!-- search field container -->
+    <div class="p-10 mb-1" style="
+    padding-bottom: 20px;
+    padding-top: 20px;
+">
+        <div class="flex items-center rounded-lg shadow-xl w-auto mx-auto ">
+            <input
+                class="searchBox rounded-l-full w-full py-4 px-6 text-gray-700 text-center leading-tight  focus:outline-none"
+                id="searchInput" type="text" placeholder="Search By Country Name..." w-5>
+            <div class="p-4">
+                <button onclick="showCountries()"
+                    class="bg-blue-500 text-white rounded-full p-2 hover:bg-gray-400 focus:outline-none w-12 h-12 flex items-center justify-center">
+                    <i class="fas fa-search"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="p-10 mb-2" style="
+    padding-bottom: 10px;
+    padding-top: 10px;
+">
+        <div>
+            <p align="center" class="leading-relaxed inline-block flex flex-col text-center w-full"><span id="country"
+                    style="color:#3b82f6"></span><span id="continent"></span></p>
+        </div>
+        <div class="flex items-center w-auto mx-auto ">
+            <p class="rounded-l-full w-full py-4 px-6 text-gray-700 text-center leading-tight  focus:outline-none"
+                id="errorText" type="text" placeholder="Search By Country Name..." w-5></p>
+        </div>
+    </div>
+
+    <!-- search result -->
+    <div>
+        <!-- spinner start -->
+        <div align="center" id="spinner" class="hidden flex items-center justify-center ">
+            <div class="w-10 h-10 border-b-2 border-blue-500 rounded-full animate-spin"></div>
+
+            <!-- spinner ends -->
+
+        </div>
+    </div>
+    <section class="text-gray-600 body-font">
+        <div class="container px-5 py-20 mx-auto" style="
+        padding-bottom: 20px;
+        padding-top: 20px;
+    ">
+            <div id="flagInfo" class="flex flex-col text-center w-full mb-5">
+                <div>
+                    <p align="center" class="leading-relaxed inline-block"><span id="country"
+                            style="color:#3b82f6"></span><span id="continent"></span></p>
+                </div>
+                <br>
+
+                <img id="flag" class="md:w-1/4 sm:w-1/2 mx-auto" src="" alt="" srcset="">
+
+            </div>
+            <div class=" flex flex-wrap -m-4 text-center">
+                <div class="p-4 md:w-1/4 sm:w-1/2 w-full">
+                    <div class="border-2 border-gray-200 px-4 py-6 rounded-lg">
+                        <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                            stroke-width="2" class="text-indigo-500 w-12 h-12 mb-3 inline-block" viewBox="0 0 24 24">
+                            <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"></path>
+                            <circle cx="9" cy="7" r="4"></circle>
+                            <path d="M23 21v-2a4 4 0 00-3-3.87m-4-12a4 4 0 010 7.75"></path>
+                        </svg>
+                        <h3 class="title-font font-medium text-3xl text-gray-900"><span id="cases"></span></h3>
+                        <p class="leading-relaxed">Total Cases Till Now</p>
+                    </div>
+                </div>
+                <div class="p-4 md:w-1/4 sm:w-1/2 w-full">
+                    <div class="border-2 border-gray-200 px-4 py-6 rounded-lg">
+                        <img src="/images/sad-tear-regular.svg" alt="" srcset="" fill="none" stroke-linecap="round"
+                            stroke-linejoin="round" stroke-width="2" class="text-indigo-500 w-12 h-12 mb-3 inline-block"
+                            viewBox="0 0 24 24">
+                        <h3 class="title-font font-medium text-3xl text-gray-900"><span id="death"></span></h3>
+                        <p class="leading-relaxed">Total Death</p>
+                    </div>
+                </div>
+                <div class="p-4 md:w-1/4 sm:w-1/2 w-full">
+                    <div class="border-2 border-gray-200 px-4 py-6 rounded-lg">
+                        <img src="/images/heartbeat-solid.svg" alt="" srcset="" fill="none" stroke-linecap="round"
+                            stroke-linejoin="round" stroke-width="2" class="text-indigo-500 w-12 h-12 mb-3 inline-block"
+                            viewBox="0 0 24 24">
+                        <h2 class="title-font font-medium text-3xl text-gray-900"><span id="recovered"></span></h2>
+                        <p class="leading-relaxed">Total Recovered</p>
+                    </div>
+                </div>
+                <div class="p-4 md:w-1/4 sm:w-1/2 w-full">
+                    <div class="border-2 border-gray-200 px-4 py-6 rounded-lg">
+                        <img src="/images/stethoscope-solid.svg" alt="" srcset="" fill="none" stroke-linecap="round"
+                            stroke-linejoin="round" stroke-width="2" class="text-indigo-500 w-12 h-12 mb-3 inline-block"
+                            viewBox="0 0 24 24">
+                        <h2 class="title-font font-medium text-3xl text-gray-900"><span id="tests"></span></h2>
+                        <p class="leading-relaxed">Total Test Completed</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script src="/script.js"></script>
+</body>
+
+</html>

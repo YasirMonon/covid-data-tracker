@@ -1,0 +1,12 @@
+/* css custom style sheet  */
+body {
+overflow-x: hidden;
+font-family: "Montserrat", sans-serif;
+background-image: url('/images/texture-bg.png');
+background-repeat: no - repeat;
+background-attachment: fixed;
+background-size: cover;
+}
+.searchBox{
+    background: white;
+}
