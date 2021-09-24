@@ -1,5 +1,4 @@
 /*=========================== using function for spinner ===========================*/
-
 const toggleSpinner = displayStyle => {
     document.getElementById('spinner').style.display = displayStyle;
 }
